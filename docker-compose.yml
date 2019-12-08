@@ -1,0 +1,35 @@
+version: "3.7"
+
+services:
+
+  multicraft_database:
+    image: mariadb
+    volumes:
+      - multicraft_mysql:/var/lib/mysql
+    environment:
+      - "MYSQL_ROOT_PASSWORD=multicraft"
+      - "MYSQL_USER=multicraft"
+      - "MYSQL_PASSWORD=multicraft"
+      - "MYSQL_DATABASE=multicraft"
+
+  php:
+    image: php:7-fpm
+    volumes:
+      - /var/www/multicraft:/usr/src/app
+    links:
+      - multicraft_database
+
+  nginx:
+    image: nginx
+    ports:
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      - /var/www/multicraft:/usr/src/app
+      - nginx.conf:/etc/nginx/conf.d/default.conf
+    links:
+      - php
+      - multicraft_database
+
+volumes:
+  multicraft_mysql: {}
