@@ -15,7 +15,7 @@ services:
   php:
     image: cookiesofdoom/mutlicraft-php
     build:
-      context: ../
+      context: ./
       dockerfile: image/php/Dockerfile
     volumes:
       - /var/www/multicraft:/usr/src/app
