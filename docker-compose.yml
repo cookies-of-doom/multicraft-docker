@@ -23,6 +23,8 @@ services:
       - multicraft-internal
     volumes:
       - /var/www/multicraft:/usr/src/app
+    depends_on:
+      - multicraft_database
 
   nginx:
     image: nginx
@@ -37,6 +39,8 @@ services:
     links:
       - php
       - multicraft_database
+    depends_on:
+      - php
 
 volumes:
   multicraft_mysql: {}
